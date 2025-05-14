@@ -5,22 +5,86 @@
   <title>Prolog Analyzer</title> 
   <style> 
     body { 
-      font-family: Arial; 
-      margin: 30px; 
+      font-family: 'Arial', sans-serif; 
+      background-color: #f7f7f7; 
+      margin: 0; 
+      padding: 0; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      color: #333; 
     } 
-    #output { 
-      white-space: pre-wrap; 
-      background: #f0f0f0; 
+
+    .container { 
+      background-color: #fff; 
+      padding: 30px; 
+      border-radius: 10px; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+      width: 80%; 
+      max-width: 800px; 
+    } 
+
+    h2 { 
+      font-size: 1.8rem; 
+      color: #4CAF50; 
+      text-align: center; 
+    } 
+
+    input[type="file"] { 
+      display: block; 
+      margin: 20px auto; 
       padding: 10px; 
+      font-size: 1rem; 
+      border-radius: 5px; 
+      border: 1px solid #ddd; 
+      background-color: #fafafa; 
+    } 
+
+    #output { 
+      margin-top: 20px; 
+      background-color: #f0f0f0; 
+      padding: 15px; 
       border-radius: 8px; 
+      border: 1px solid #ddd; 
+      font-size: 1rem; 
+      white-space: pre-wrap; 
+      overflow-wrap: break-word; 
+      color: #555; 
+    } 
+
+    .section-title { 
+      font-weight: bold; 
+      color: #4CAF50; 
+      margin-top: 15px; 
+    } 
+
+    .count { 
+      font-size: 0.9rem; 
+      color: #777; 
+    }
+
+    /* Add responsive styling */
+    @media (max-width: 600px) { 
+      .container { 
+        padding: 20px; 
+        width: 90%; 
+      } 
+
+      h2 { 
+        font-size: 1.5rem; 
+      } 
     } 
   </style> 
 </head> 
 <body> 
-  <h2>Качи Prolog файл (.pl)</h2> 
-  <input type="file" id="fileInput" accept=".pl"> 
-  <div id="output"></div> 
-  
+  <div class="container"> 
+    <h2>Анализатор на Prolog файл</h2> 
+    <p style="text-align: center;">Качи Prolog файл (.pl) за анализ.</p> 
+    <input type="file" id="fileInput" accept=".pl"> 
+    <div id="output"></div> 
+  </div> 
+
   <script> 
     document.getElementById('fileInput').addEventListener('change', function(event) { 
       const file = event.target.files[0]; 
@@ -51,17 +115,17 @@
         const output = `
 🔎 Анализ на Prolog файл:
 ------------------------- 
-Факти (${facts.length}): 
-${facts.join('\n')} 
+<div class="section-title">Факти (${facts.length})</div>
+<div class="count">${facts.length > 0 ? facts.join('<br>') : 'Няма намерени факти.'}</div>
 
-Правила (${rules.length}): 
-${rules.join('\n')} 
+<div class="section-title">Правила (${rules.length})</div>
+<div class="count">${rules.length > 0 ? rules.join('<br>') : 'Няма намерени правила.'}</div>
 
-Коментари (${comments.length}):
-${comments.join('\n')} 
+<div class="section-title">Коментари (${comments.length})</div>
+<div class="count">${comments.length > 0 ? comments.join('<br>') : 'Няма намерени коментари.'}</div>
         `;
         
-        document.getElementById('output').textContent = output;
+        document.getElementById('output').innerHTML = output;
       }; 
       
       reader.readAsText(file); 
